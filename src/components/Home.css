@@ -1,0 +1,22 @@
+.tweet-form {
+  margin: auto;
+}
+.tweet-paper {
+  margin: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.tweet-paper > div {
+  width: 500px;
+}
+
+Textarea {
+  width: 100%;
+  height: 200px;
+  resize: none;
+}
+
+.tweet-top{
+  display:flex;
+}

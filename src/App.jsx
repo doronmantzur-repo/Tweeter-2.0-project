@@ -1,27 +1,31 @@
-import { AppShell, Group, Button, Text } from "@mantine/core";
-import { Link, Outlet } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Navbar from "./components/Navbar.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import Home from "./components/Home.jsx";
+// import ContactDetailsPage from "./ContactDetailsPage.jsx";
+// import NotFoundPage from "./NotFoundPage.jsx";
+const user = {
+    name: "Doron",
+    username: "doron_dev",
+    avatar: "https://i.pravatar.cc/150?img=3",
+    bio: "Building Tweeter 2.0",
+    followers: 120,
+    following: 80,
+  };
 export default function App() {
   return (
-    <AppShell
-      header={{ height: 60 }}
-      padding="md"
-    >
-      <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
-          <Text fw={700} size="lg">Tweeter</Text>
+    <MantineProvider defaultColorScheme="dark">
+      <BrowserRouter>
+        <Navbar />
 
-          <Group>
-            <Button variant="subtle" component={Link} to="/">Home</Button>
-            <Button variant="subtle" component={Link} to="/explore">Explore</Button>
-            <Button variant="subtle" component={Link} to="/profile">Profile</Button>
-          </Group>
-        </Group>
-      </AppShell.Header>
-
-      <AppShell.Main>
-        <Outlet />
-      </AppShell.Main>
-    </AppShell>
+        <Routes>
+          <Route path="/" element={<Home user={user}/>} />
+          <Route path="/pages/ProfilePage" element={<ProfilePage user={user} />} />
+          {/* <Route path="*" element={<NotFoundPage />} /> */}
+        </Routes>
+      </BrowserRouter>
+    </MantineProvider>
   );
 }

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -9,7 +9,7 @@ export default function Navbar() {
           <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/contact">Profile</NavLink>
+          <NavLink to="/pages/ProfilePage">Profile</NavLink>
         </li>
       </ul>
     </nav>
