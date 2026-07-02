@@ -1,5 +1,6 @@
-import { Textarea, Button, Card } from "@mantine/core";
+import { Textarea, Button, Card, Paper } from "@mantine/core";
 import { useState } from "react";
+import "./Tweet.css"
 
 export default function Tweet() {
   const [tweet, setTweet] = useState("");
@@ -10,7 +11,7 @@ export default function Tweet() {
   };
 
   return (
-    <Card shadow="sm" p="lg" radius="md" withBorder>
+    <Paper shadow="sm" p="lg" >
       <Textarea
         placeholder="What's happening?"
         value={tweet}
@@ -22,6 +23,6 @@ export default function Tweet() {
       <Button mt="md" onClick={handleTweet}>
         Tweet
       </Button>
-    </Card>
+    </Paper>
   );
 }

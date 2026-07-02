@@ -1,0 +1,26 @@
+nav.header {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+nav.header > ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+}
+
+nav.header > ul > li > a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px;
+  color: black;
+}
+
+nav.header > ul > li > a:hover {
+  background-color: #f0f0f0;
+}
+
+nav.header > ul > li > a.active {
+  background-color: cadetblue;
+  color: white;
+}
