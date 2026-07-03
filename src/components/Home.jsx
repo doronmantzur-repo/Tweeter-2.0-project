@@ -2,33 +2,40 @@ import { Textarea, Button, Card, Paper } from "@mantine/core";
 import { useState, useEffect } from "react";
 import Tweet from "./Tweet";
 import "./Home.css";
+import axios from "axios";
+import api from "../utils/axiosClient";
 
 export default function Home({ user }) {
   const [tweetText, setTweetText] = useState("");
   const [tweets, setTweets] = useState([]);
 
-  const handleTweet = () => {
+  const handleTweet = async () => {
     const dateTime = new Date();
-    const newTweet = {
-      id: Date.now(),
-      text: tweetText,
-      user: user,
-      date: dateTime.toLocaleDateString(),
-      time: dateTime.toLocaleTimeString()
-    };
-    const updatedTweets = [newTweet, ...tweets];
 
-    setTweets(updatedTweets);
+    const newTweet = {
+
+      date: dateTime.toISOString(),
+      userName: user.name,
+      content: tweetText,
+    };
+try{
+    const res = await api.post("/Tweets", newTweet, {
+      headers: { Prefer: "return=representation" },
+    });
+
+    setTweets((tweets) => [res.data[0], ...tweets]);
     setTweetText("");
-    //localStorage.setItem("tweets", JSON.stringify(updatedTweets));
+  }
+  catch(err){
+    console.log("Supabase error:", err.response?.data);
+  }
   };
 
   useEffect(() => {
-    const savedTweets = localStorage.getItem("tweets");
-    if (savedTweets) {
-      //console.log(JSON.parse(savedTweets));
-     // setTweets(JSON.parse(savedTweets));
-    }
+    api.get("/Tweets?select=*").then((res) => {
+      setTweets(res.data);
+      console.log(res.data);
+    });
   }, []);
 
   return (
@@ -59,7 +66,7 @@ export default function Home({ user }) {
         </div>
       </Paper>
       {tweets.map((t) => (
-        <Tweet key={t.id} text={t.text} user={t.user} date={t.date} time={t.time} />
+        <Tweet id={t.id} date={t.date} user={t.userName} text={t.content} />
       ))}
     </div>
   );

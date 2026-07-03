@@ -2,8 +2,8 @@ import { Textarea, Paper } from "@mantine/core";
 // import { useState } from "react";
 import "./Home.css";
 
-function getStructuredTweet(text, user, date, time) {
-  console.log("AAA", text, user, date, time);
+function getStructuredTweet(id, date,user, text ) {
+
   return (
     <Paper shadow="md" p="lg" className="tweet-paper">
       <div style={{ position: "relative" }}>
@@ -30,13 +30,13 @@ function getStructuredTweet(text, user, date, time) {
               pointerEvents: "none",
               opacity: 0.4,
             }}
-          >{date} {time}</div>
+          >{date}</div>
         </div>
       </div>
     </Paper>
   );
 }
 
-export default function Tweet({ text, user, date, time }) {
-  return getStructuredTweet(text, user, date, time);
+export default function Tweet({ id, date,user, text  }) {
+  return getStructuredTweet(id, date,user, text );
 }
