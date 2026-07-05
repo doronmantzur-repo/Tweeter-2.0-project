@@ -3,7 +3,6 @@ import { Textarea, Paper } from "@mantine/core";
 import "./Home.css";
 
 function getStructuredTweet(id, date,user, text ) {
-
   return (
     <Paper shadow="md" p="lg" className="tweet-paper">
       <div style={{ position: "relative" }}>
@@ -19,7 +18,7 @@ function getStructuredTweet(id, date,user, text ) {
               opacity: 0.4,
             }}
           >
-            {user.name}
+            {user}
           </div>
           <div
           style={{
