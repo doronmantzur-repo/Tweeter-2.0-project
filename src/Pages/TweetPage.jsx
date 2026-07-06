@@ -1,6 +1,11 @@
 import { Textarea, Button, Paper } from "@mantine/core";
 
-export default function TweetPage({ tweetText, setTweetText, posting, onTweet }) {
+export default function TweetPage({
+  tweetText,
+  setTweetText,
+  posting,
+  onTweet,
+}) {
   return (
     <Paper shadow="md" p="lg" className="tweet-paper">
       <div style={{ position: "relative" }}>
@@ -15,7 +20,7 @@ export default function TweetPage({ tweetText, setTweetText, posting, onTweet })
           mt="md"
           onClick={onTweet}
           color="twitter"
-          disabled={posting || tweetText.length === 0 || tweetText.length > 5}
+          disabled={posting || tweetText.length === 0 || tweetText.length > 140}
           style={{
             position: "absolute",
             bottom: "10px",

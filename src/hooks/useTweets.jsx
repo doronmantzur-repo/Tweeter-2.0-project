@@ -12,17 +12,22 @@ export default function useTweets(user) {
   }
 
   useEffect(() => {
-    api
-      .get("/Tweets?select=*")
-      .then((res) => {
-        const sorted = sortTweetsByDate(res.data);
-        setTweets(sorted);
-      })
-      .catch((err) => setError(err.response?.data))
-      .finally(() => setLoading(false));
+    const fetchTweets = async () => {
+      api
+        .get("/tweeterPosts?select=*")
+        .then((res) => {
+          const sorted = sortTweetsByDate(res.data);
+          setTweets(sorted);
+        })
+        .catch((err) => setError(err.response?.data))
+        .finally(() => setLoading(false));
+    };
+    fetchTweets();
+    const interval = setInterval(fetchTweets, 5000);
+    return () => clearInterval(interval);
   }, []);
 
-  // POST tweet
+
   const addTweet = async (content) => {
     setPosting(true);
 
@@ -33,7 +38,7 @@ export default function useTweets(user) {
     };
     console.log(newTweet);
     try {
-      const res = await api.post("/Tweets", newTweet, {
+      const res = await api.post("/tweeterPosts", newTweet, {
         headers: { Prefer: "return=representation" },
       });
 
