@@ -2,14 +2,12 @@ import { useState } from "react";
 import useTweets from "../hooks/useTweets";
 import TweetPage from "../pages/TweetPage";
 import TweetList from "./TweetList";
-import useProfile from "../hooks/useProfile";
-import { useUser } from "../context/UserContext";
+import { useAuth } from "../auth/AuthProvider";
 
 export default function Home() {
   const [tweetText, setTweetText] = useState("");
-  const { userName } = useUser();
-  //console.log("user:", userName);
-  const { tweets, loading, posting, error, addTweet } = useTweets(userName);
+  const {  activeUser, onLogin, onLogout} = useAuth();
+  const { tweets, loading, posting, error, addTweet } = useTweets(activeUser);
 
   const handleTweet = () => {
     addTweet(tweetText);

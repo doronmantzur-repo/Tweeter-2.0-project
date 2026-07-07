@@ -2,7 +2,7 @@
   "name": "tweeter-2-0-project",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://doronmantzur-repo.github.io/Tweeter-2.0-project",
+  "homepage": "https://doronmantzur-repo.github.io",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,6 +16,7 @@
     "@mantine/core": "^9.4.1",
     "@mantine/form": "^9.4.1",
     "@mantine/hooks": "^9.4.1",
+    "@supabase/supabase-js": "^2.110.0",
     "axios": "^1.18.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",

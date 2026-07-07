@@ -1,5 +1,4 @@
 import { Textarea, Paper } from "@mantine/core";
-// import { useState } from "react";
 import "./Home.css";
 
 function getStructuredTweet(id, date,user, text ) {

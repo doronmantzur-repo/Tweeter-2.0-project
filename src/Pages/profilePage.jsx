@@ -1,21 +1,96 @@
-import { Card, Avatar, Text, Group, Button, Input } from "@mantine/core";
-import {useState} from "react"
-import useProfile from "../hooks/useProfile";
-import { useUser } from "../context/UserContext";
+import { useState, useEffect } from "react";
+import "./ProfilePage.css";
+import { supabase } from "../utils/supabaseClient";
+import {
+  TextInput,
+  PasswordInput,
+  Button,
+  Paper,
+  Title,
+  Text,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { useAuth } from "../auth/AuthProvider";
 
 export default function ProfilePage() {
-  const { userName, updateUser } = useUser();;
-  const [inputUser, setInputUser] = useState(userName);
+  const [session, setSession] = useState(null);
+  const [error, setError] = useState(null);
+  const { activeUser } = useAuth();
+  const { onLogout } = useAuth();
+  const { onLogin } = useAuth();
+
+  const form = useForm({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleLogin = async (values) => {
+    let error = await onLogin(values.email, values.password);
+    if (error) {
+      setError(error);
+    }
+  };
+
+  if (!activeUser) {
+    return (
+      <dev className="profile-page">
+        <Paper
+          shadow="md"
+          radius="md"
+          p="xl"
+          withBorder
+        >
+          <Title order={3} mb="md">
+            Login
+          </Title>
+
+          <form onSubmit={form.onSubmit(handleLogin)}>
+            <TextInput
+              label="Email"
+              placeholder="doron@example.com"
+              {...form.getInputProps("email")}
+            />
+
+            <PasswordInput
+              label="Password"
+              placeholder="password"
+              mt="md"
+              {...form.getInputProps("password")}
+            />
+
+            {error && (
+              <Text style={{ color: "red" }} mt="sm">
+                {error.message + (error.details ? ` (${error.details})` : "")}
+              </Text>
+            )}
+
+            <Button type="submit" fullWidth mt="xl">
+              Sign In
+            </Button>
+          </form>
+        </Paper>
+      </dev>
+    );
+  }
 
   return (
-    <div style={{ maxWidth: 600, margin: "0 auto", padding: "20px" }}>
-      <Card shadow="sm" p="lg" radius="md" withBorder>
-        <Text mt="md">{userName}</Text>
-        <Input onChange = {(e) => setInputUser(e.target.value)} size="lg" placeholder="User Name" />
-        <Button onClick = {() => updateUser(inputUser)} variant="filled" mt="lg">
-          Save
+    <dev className="profile-page">
+      <Paper shadow="md" radius="md" p="xl" withBorder>
+        <Title order={3}>Welcome, {activeUser.email}</Title>
+        <Text mt="md">You are logged in and authorized.</Text>
+
+        <Button
+          mt="xl"
+          color="red"
+          onClick={() => {
+            onLogout();
+          }}
+        >
+          Logout
         </Button>
-      </Card>
-    </div>
+      </Paper>
+    </dev>
   );
 }

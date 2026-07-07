@@ -1,26 +1,31 @@
 import { MantineProvider } from "@mantine/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./context/UserContext";
-import Navbar from "./components/Navbar.jsx";
-import ProfilePage from "./pages/ProfilePage.jsx";
+import AuthProvider from "./auth/AuthProvider";
+import Navbar from "./components/Navbar";
+import ProfilePage from "./pages/ProfilePage";
 import Home from "./components/Home.jsx";
-// import ContactDetailsPage from "./ContactDetailsPage.jsx";
-// import NotFoundPage from "./NotFoundPage.jsx";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 export default function App() {
   return (
     <MantineProvider defaultColorScheme="dark">
-      <UserProvider>
       <BrowserRouter>
-        <Navbar />
+        <AuthProvider>
+          <Navbar />
 
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/pages/ProfilePage" element={<ProfilePage  />} />
-          {/* <Route path="*" element={<NotFoundPage />} /> */}
-        </Routes>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/pages/ProfilePage" element={<ProfilePage />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
-      </UserProvider>
     </MantineProvider>
   );
 }
